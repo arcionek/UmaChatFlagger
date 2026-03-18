@@ -3,7 +3,7 @@
 const highProfanity = ["puta", "follo", "ubre", "k1ll", "rading", "arei", "pedo", "injun", "naga", "sixty nine", "69", "terf", "assi", "unti", "shota", "hate", "puto", "anal", "gringo", "buta", "anus", "gaiji", "chinc", "insin", "twat", "tata", "tard", "smut", "suck", "phuq", "ombo", "nabo", "muff", "kuso", "kick", "keto", "cbt", "gay", "gei", "jcb", "jew", "jot", "omg", "omu", "poa", "pud", "baka", "boob", "bomb", "damn", "debu", "dick", "cock", "gash", "isis", "jerk", "roa", "bum", "aho", "xx", "jj", "3p", "ifica", "sex", "tits", "inko", "cul", "impo", "etti"];
 const lowProfanity = ["abo", "sag", "kill", "butt", "tit", "fuk", "shine", "ass", "sm", "ho", "hit"];
 // currently this one does not do anything, I am actually stumped how to do this egregious case
-const specialCase = ["pd a"];
+const specialCase = [/pd .*?a/g];
 
 const input = document.getElementById("input");
 const output = document.getElementById("output");
@@ -57,7 +57,15 @@ function findOffenses(text, highList, lowList) {
       idx = normalized.indexOf(word, idx + 1);
     }
   });
-
+  
+  // ---------- SPECIAL profanity (regular expressions) ----------
+  specialCase.forEach(word =>{
+    const regexpResult = text.matchAll(word)
+    regexpResult.forEach(match => {
+      offenses.push([match.index, match.index+match[0].length-1])
+    })
+  });
+	
   return offenses;
 }
 
