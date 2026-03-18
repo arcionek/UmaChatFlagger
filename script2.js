@@ -87,7 +87,7 @@ function highlight(text, ranges) {
   for (const [start, end, title] of ranges) {
     result += escapeHTML(text.slice(lastIndex, start));
 	if(title){
-	  result += `<mark style="background: #ff5e5e!important" title="${title}">`
+	  result += `<mark style="background: #ff8888!important" title="${title}">`
 	}
 	else{
       result += `<mark>`;
