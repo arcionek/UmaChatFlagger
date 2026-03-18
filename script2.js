@@ -3,12 +3,14 @@
 const highProfanity = ["puta", "follo", "ubre", "k1ll", "rading", "arei", "pedo", "injun", "naga", "sixty nine", "69", "terf", "assi", "unti", "shota", "hate", "puto", "anal", "gringo", "buta", "anus", "gaiji", "chinc", "insin", "twat", "tata", "tard", "smut", "suck", "phuq", "ombo", "nabo", "muff", "kuso", "kick", "keto", "cbt", "gay", "gei", "jcb", "jew", "jot", "omg", "omu", "poa", "pud", "baka", "boob", "bomb", "damn", "debu", "dick", "cock", "gash", "isis", "jerk", "roa", "bum", "aho", "xx", "jj", "3p", "ifica", "sex", "tits", "inko", "cul", "impo", "etti"];
 const lowProfanity = ["abo", "sag", "kill", "butt", "tit", "fuk", "shine", "ass", "sm", "ho", "hit"];
 // currently this one does not do anything, I am actually stumped how to do this egregious case
-const specialCase = [/pd .*?a/g];
+const specialCase = [
+    [/pd .*?a/g, "'pd ' followed by an 'a' is flagged no matter how much text separates them"]
+  ];
 
 const input = document.getElementById("input");
 const output = document.getElementById("output");
 
-function findOffenses(text, highList, lowList) {
+function findOffenses(text, highList, lowList, specialList) {
   const offenses = [];
 
   // Build alphanumeric-only normalized string
@@ -59,10 +61,15 @@ function findOffenses(text, highList, lowList) {
   });
   
   // ---------- SPECIAL profanity (regular expressions) ----------
-  specialCase.forEach(word =>{
-    const regexpResult = text.matchAll(word)
+  specialList.forEach(rule =>{
+	const [pattern, reason] = rule
+    const regexpResult = text.matchAll(pattern)
     regexpResult.forEach(match => {
-      offenses.push([match.index, match.index+match[0].length-1])
+	  const offense = [match.index, match.index+match[0].length-1]
+	  if(reason){
+		offense.push(reason)
+	  }
+      offenses.push(offense)
     })
   });
 	
@@ -77,9 +84,15 @@ function highlight(text, ranges) {
   let result = "";
   let lastIndex = 0;
 
-  for (const [start, end] of ranges) {
+  for (const [start, end, title] of ranges) {
     result += escapeHTML(text.slice(lastIndex, start));
-    result += `<mark>${escapeHTML(text.slice(start, end + 1))}</mark>`;
+	if(title){
+	  result += `<mark title="${title}">`
+	}
+	else{
+      result += `<mark>`;
+	}
+	result += `${escapeHTML(text.slice(start, end + 1))}</mark>`
     lastIndex = end + 1;
   }
 
@@ -99,6 +112,6 @@ function escapeHTML(str) {
 
 input.addEventListener("input", () => {
   const text = input.value;
-  const offenses = findOffenses(text, highProfanity, lowProfanity);
+  const offenses = findOffenses(text, highProfanity, lowProfanity, specialCase);
   output.innerHTML = highlight(text, offenses);
 });
