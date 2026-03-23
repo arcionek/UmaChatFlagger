@@ -1,7 +1,7 @@
 // script.js
 
-const highProfanity = ["ago", "puta", "follo", "ubre", "k1ll", "rading", "arei", "pedo", "injun", "naga", "sixty nine", "69", "terf", "assi", "unti", "shota", "hate", "puto", "anal", "gringo", "buta", "anus", "gaiji", "chinc", "insin", "twat", "tata", "tard", "smut", "suck", "phuq", "ombo", "nabo", "muff", "kuso", "kick", "keto", "cbt", "gay", "gei", "jcb", "jew", "jot", "omg", "omu", "poa", "pud", "baka", "boob", "bomb", "damn", "debu", "dick", "cock", "gash", "isis", "jerk", "roa", "bum", "aho", "xx", "jj", "3p", "ifica", "sex", "tits", "inko", "cul", "impo", "etti"];
-const lowProfanity = ["abo", "sag", "kill", "butt", "tit", "fuk", "shine", "ass", "sm", "ho", "hit"];
+const highProfanity = ["roa", "ago", "puta", "follo", "ubre", "k1ll", "rading", "arei", "pedo", "injun", "naga", "sixty nine", "69", "terf", "assi", "unti", "shota", "hate", "puto", "anal", "gringo", "buta", "anus", "gaiji", "chinc", "insin", "twat", "tata", "tard", "smut", "suck", "phuq", "ombo", "nabo", "muff", "kuso", "kick", "keto", "cbt", "gay", "gei", "jcb", "jew", "jot", "omg", "omu", "poa", "pud", "baka", "boob", "bomb", "damn", "debu", "dick", "cock", "gash", "isis", "jerk", "roa", "bum", "aho", "xx", "jj", "3p", "ifica", "sex", "tits", "inko", "cul", "impo", "etti"];
+const lowProfanity = ["ntr", "abo", "sag", "kill", "butt", "tit", "fuk", "shine", "ass", "sm", "ho", "hit"];
 
 const specialCase = [
     [/pd .*?a/g, "'pd ' followed by an 'a' is flagged no matter how much text separates them"]
